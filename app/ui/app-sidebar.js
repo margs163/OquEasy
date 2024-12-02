@@ -69,14 +69,14 @@ const sidebarItems = [
 export function AppSidebar() {
   return (
     <Sidebar collapsible="offcanvas" variant="sidebar" className="h-full text-gray-700 text-lg">
-      <SidebarHeader>
+      <SidebarHeader className="p-0">
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild>
+            <SidebarMenuButton asChild className="py-8 px-4">
               <Link href="#">
                 {/* <Image src={"/olympiad.png"} width={500} height={500} alt="logo" /> */}
-                <span className="text-2xl font-medium text-green-700">Oqy</span>
-                <span className="text-2xl font-medium text-green-700">Easy</span>
+                <span className="text-3xl font-semibold text-green-600 ">Oqy</span>
+                <span className="text-3xl font-semibold text-green-600 ">Easy</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>

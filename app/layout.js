@@ -3,7 +3,7 @@ import Link from "next/link";
 import Navbar from "./ui/navbar";
 import { Roboto } from "next/font/google";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/app-sidebar";
+import { AppSidebar } from "@/app/ui/app-sidebar";
 import {
   Breadcrumb,
   BreadcrumbEllipsis,
@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/card";
 
 import { Calendar } from "@/components/ui/calendar";
+import AsideSections from "./ui/aside";
 
 export const metadata = {
   title: "Main Page prototype",
@@ -76,39 +77,7 @@ export default function RootLayout({ children }) {
               {/* <SidebarTrigger className="flex fixed top-5" /> */}
               <div className="flex mx-2 mt-8 gap-4">{children}</div>
             </main>
-            <aside className=" col-start-2 col-end-3 mx-8 mt-4 flex flex-col gap-8">
-              <Card className="bg-white text-gray-700">
-                <CardHeader>
-                  <CardTitle className="text-green-700">Archive</CardTitle>
-                </CardHeader>
-                <hr className="w-full border-1 mb-6" />
-                <CardContent>
-                  <ul className="flex flex-col gap-2">
-                    <li className="flex justify-start gap-2">
-                      <Megaphone size={22} className=" text-green-600" />
-                      <Link href={"#"}>Announcement of November</Link>
-                    </li>
-                    <hr />
-                    <li className="flex justify-start gap-2">
-                      <ServerCrash size={22} className="text-green-600" />
-                      <Link href={"#"}>Hardest question</Link>
-                    </li>
-                    <hr />
-                    <li className="flex justify-start gap-2">
-                      <HeartPulse size={22} className="text-green-600" />
-                      <Link href={"#"}>I am edging</Link>
-                    </li>
-                    <hr />
-                  </ul>
-                </CardContent>
-              </Card>
-              <Calendar
-                mode="single"
-                selected={new Date()}
-                // onSelect={}
-                className=" bg-white rounded-xl border shadow-sm"
-              />
-            </aside>
+            <AsideSections />
           </div>
         </SidebarProvider>
       </body>

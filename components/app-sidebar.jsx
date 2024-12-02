@@ -68,22 +68,23 @@ const sidebarItems = [
 
 export function AppSidebar() {
   return (
-    <Sidebar collapsible="offcanvas" variant="sidebar" className="h-full">
+    <Sidebar collapsible="offcanvas" variant="sidebar" className="h-full text-gray-700 text-lg">
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild>
               <Link href="#">
                 {/* <Image src={"/olympiad.png"} width={500} height={500} alt="logo" /> */}
-                <span className="text-base font-semibold text-green-500">Smart Olympiad</span>
+                <span className="text-2xl font-medium text-green-700">Oqy</span>
+                <span className="text-2xl font-medium text-green-700">Easy</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <SidebarGroup className="">
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
+        <SidebarGroup className="text-lg">
+          <SidebarGroupLabel>Platform</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {sidebarItems.map((item, index) => {
@@ -91,8 +92,8 @@ export function AppSidebar() {
                   <Collapsible key={index} className="group/collapsible">
                     <SidebarMenuItem>
                       <CollapsibleTrigger asChild>
-                        <SidebarMenuButton className="">
-                          {item.topic}
+                        <SidebarMenuButton className=" text-base">
+                          {`${index + 1}. ${item.topic}`}
                           <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
                         </SidebarMenuButton>
                       </CollapsibleTrigger>
@@ -102,7 +103,7 @@ export function AppSidebar() {
                             return (
                               <SidebarMenuSubItem key={index}>
                                 <SidebarMenuSubButton asChild>
-                                  <Link href="#">{sub}</Link>
+                                  <Link href="#" className="text-base">{sub}</Link>
                                 </SidebarMenuSubButton>
                               </SidebarMenuSubItem>
                             );
@@ -117,14 +118,14 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter>
+      <SidebarFooter className="border-2 border-gray-200 rounded-md p-1 m-2">
         <SidebarMenu>
           <SidebarMenuItem>
             <DropdownMenu>
               <DropdownMenuTrigger className="w-full">
                 <SidebarMenuButton asChild>
                   <Link href={"#"}>
-                    <span>Username</span>
+                    <span>More</span>
                     <ChevronUp className="ml-auto" />
                   </Link>
                 </SidebarMenuButton>

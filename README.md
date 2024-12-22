@@ -5,7 +5,7 @@
 ## Some screenshots of the page
 ![image](https://github.com/user-attachments/assets/4dc28c30-cb22-4dde-85d8-5451e78263ee)
 
-![image](https://github.com/user-attachments/assets/a838e250-4730-458b-8d20-3703bf722237)
+![image](https://github.com/user-attachments/assets/699e1d18-8ec9-4c22-b6d5-12ae988c30b4)
 
 ## 3. Getting Started
 

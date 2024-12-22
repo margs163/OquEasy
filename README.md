@@ -7,13 +7,6 @@
 ### Main section of the page
 ![image](https://github.com/user-attachments/assets/4dc28c30-cb22-4dde-85d8-5451e78263ee)
 
-### Navigation between topics using a sidebar
-![image](https://github.com/user-attachments/assets/d5a22c43-4c19-4b9b-bf6e-af68be362e0f)
-
-### Some additional elements
-![image](https://github.com/user-attachments/assets/7e5659b0-ffc3-4a36-97de-bdd505f31e67)
-
-
 ## Getting Started
 
 First, run the development server:

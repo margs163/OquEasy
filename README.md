@@ -1,13 +1,13 @@
-## What is Oqu Easy?
+## 1. What is Oqu Easy?
 
 **Oqu Easy** - is an educational platform for learning olympiad programming. Platform is intended for learning the basic concepts of Data Structures and Algorithms.
 
-## Some screenshots of the page
+## 2. Some screenshots of the page
 
 ### Main section of the page
 ![image](https://github.com/user-attachments/assets/4dc28c30-cb22-4dde-85d8-5451e78263ee)
 
-## Getting Started
+## 3. Getting Started
 
 First, run the development server:
 

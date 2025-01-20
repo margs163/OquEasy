@@ -7,6 +7,11 @@
 
 ![image](https://github.com/user-attachments/assets/699e1d18-8ec9-4c22-b6d5-12ae988c30b4)
 
+![image](https://github.com/user-attachments/assets/31855e39-827c-4791-8b7f-0f8144b6bd07)
+
+![image](https://github.com/user-attachments/assets/010eaa83-d389-4652-9e75-3a2634b4dff3)
+
+
 ## 3. Getting Started
 
 First, run the development server:

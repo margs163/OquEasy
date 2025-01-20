@@ -35,6 +35,7 @@ export const metadata = {
 export const roboto = Roboto({
   subsets: ["latin"],
   weight: ["100", "300", "400", "500", "700", "900"],
+  variable: "--font-roboto",
 });
 
 const tabs = [
@@ -47,7 +48,8 @@ const tabs = [
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${roboto.className} bg-zinc-100 antialiased`}>
+      <body className={`${roboto.variable} font-sans antialiased`}>
+        {/* <Navbar /> */}
         {children}
       </body>
     </html>

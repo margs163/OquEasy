@@ -35,8 +35,8 @@ const tabs = [
 
 export default function Layout({ children }) {
   return (
-    <div>
-      <Navbar />
+    <div className="bg-zinc-100">
+      {/* <Navbar /> */}
       <SidebarProvider className="">
         <AppSidebar className="" />
         <div className="w-full grid grid-cols-[minmax(0,_0.7fr)_minmax(0,_0.3fr)]">

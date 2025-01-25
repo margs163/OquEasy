@@ -61,7 +61,7 @@ export default function Home() {
       img: "/girl2.jpg",
     },
     {
-      name: "Sekirbek Asanali",
+      name: "Serikbek Asanali",
       opinion:
         "Seamless learning experience from start to finish. Wide range of subjects to choose from. Exceeded my expectations in every way.",
       img: "/boy2.jpg",

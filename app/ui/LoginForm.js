@@ -10,6 +10,13 @@ export default function LoginForm({ children }) {
     email: "",
     password: "",
   });
+  const [formSubmitted, setFormSubmited] = useState(false);
+
+  useEffect(() => {
+    fetch("localhost:8000/api/account/login")
+      .then((res) => res.json())
+      .then((data) => {});
+  });
 
   const router = useRouter();
 
@@ -22,6 +29,7 @@ export default function LoginForm({ children }) {
 
   async function handleSubmition(e) {
     e.preventDefault();
+    setFormSubmited(!formSubmitted);
 
     // const signInData = await signIn("credentials", {
     //   email: formValues.email,

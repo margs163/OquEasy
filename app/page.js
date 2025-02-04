@@ -27,6 +27,7 @@ import {
 import Link from "next/link";
 import Navbar from "./ui/navbar";
 import NewsBar from "./ui/newsBar";
+import { redirect } from "next/navigation";
 
 export default function Home() {
   const modules = [
@@ -107,12 +108,18 @@ export default function Home() {
               </p>
             </div>
             <div className="self-start flex gap-6">
-              <button className="text-white bg-green-500 py-4 px-6 rounded-3xl text-xl font-medium">
+              <Link
+                href={"/login"}
+                className="text-white bg-green-500 py-4 px-6 rounded-3xl text-xl font-medium"
+              >
                 Начать
-              </button>
-              <button className="text-green-500 bg-white py-4 px-6 rounded-3xl text-xl font-medium border-[2px] border-green-500">
+              </Link>
+              <Link
+                href={"/login"}
+                className="text-green-500 bg-white py-4 px-6 rounded-3xl text-xl font-medium border-[2px] border-green-500"
+              >
                 Подробнее
-              </button>
+              </Link>
             </div>
           </div>
           <div className="col-start-2 col-end-2">

@@ -1,4 +1,5 @@
 import uuid
+import asyncio
 from fastapi_users import FastAPIUsers
 from .db_dependency import User, get_user_manager, create_db_and_tables, create_async_engine
 from .schemas.auth import UserRead, UserCreate, UserUpdate
@@ -10,7 +11,7 @@ import uvicorn
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # await create_db_and_tables()
+    await create_db_and_tables()
     yield
 
 fastapi_users = FastAPIUsers[User, uuid.UUID](

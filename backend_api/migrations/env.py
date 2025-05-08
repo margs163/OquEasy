@@ -1,6 +1,7 @@
 from logging.config import fileConfig
 from dotenv import load_dotenv
-from backend_api.db_dependency import User, Base
+from backend_api.db_dependency import User, Base #noqa
+from backend_api.schemas.content import Content, Topic, ContentImage, ContentPresentation, ContentVideo #noqa
 import os
 
 from sqlalchemy import engine_from_config

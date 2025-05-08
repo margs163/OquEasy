@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import Navbar from "../ui/navbar";
 import { Roboto } from "next/font/google";
@@ -25,23 +26,34 @@ import {
 
 import { Calendar } from "@/components/ui/calendar";
 import AsideSections from "@/app/ui/aside";
-
-const tabs = [
-  { href: "/#", label: "Course" },
-  { href: "/algorithms", label: "Sorting Algorithms" },
-  { href: "/heapsort", label: "Heap Sort" },
-  { href: "/theory", label: "Theory" },
-];
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Layout({ children }) {
+  const [tabs, setTabs] = useState([
+    { href: "/", label: "Home" },
+    { href: "/course", label: "Course" },
+  ]);
+  // useEffect(() => {
+  //   console.log(window.location.href);
+  //   const currentURL = window.location.href.split("/").slice(3);
+  //   const mappedURL = currentURL.map((item) => {
+  //     return { href: `/${item}`, label: item[0].toUpperCase() + item.slice(1) };
+  //   });
+  //   setTabs((prev) => {
+  //     return [prev[0], ...mappedURL];
+  //   });
+  //   console.log(mappedURL);
+  // }, []);
+
   return (
     <div className="bg-zinc-100">
       {/* <Navbar /> */}
-      <SidebarProvider className="">
-        <AppSidebar className="" />
+      <SidebarProvider defaultOpen={true} className="">
+        <AppSidebar setTabs={setTabs} className="" />
         <div className="w-full grid grid-cols-[minmax(0,_0.7fr)_minmax(0,_0.3fr)]">
-          <main className=" col-start-1 col-end-2 bg-white p-2 m-4 border-2 border-gray-200 rounded-md w-full">
-            <Breadcrumb className="ml-4 mt-2">
+          <main className=" col-start-1 col-end-2 bg-white p-6 m-4 border-2 border-gray-200 rounded-md w-full">
+            <Breadcrumb className="">
               <BreadcrumbList>
                 {tabs.map((item, index) => {
                   return (
@@ -62,8 +74,7 @@ export default function Layout({ children }) {
                 })}
               </BreadcrumbList>
             </Breadcrumb>
-            {/* <SidebarTrigger className="flex fixed top-5" /> */}
-            <div className="flex mx-2 mt-8 gap-4">{children}</div>
+            <div className="flex gap-4">{children}</div>
           </main>
           <AsideSections />
         </div>

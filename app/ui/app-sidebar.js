@@ -1,3 +1,4 @@
+"use client";
 import {
   UserCircle,
   Home,
@@ -9,7 +10,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-
+import { v4 as uuidv4 } from "uuid";
 import {
   Sidebar,
   SidebarContent,
@@ -44,39 +45,150 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 const sidebarItems = [
   {
-    topic: "Dynamic Programming",
+    topic: { name: "Жадные алгоритмы", link: "greedy" },
     subTopics: [
-      "House Robber",
-      "Min Cost Path",
-      "Decode Ways",
-      "Subset Sum problems",
-      "Coin Change problem",
+      { name: "Принципы жадного подхода", link: "/greedy-principles" },
+      { name: "Два указателя", link: "/greedy-two-pointers" },
+      { name: "Примеры классических задач", link: "/greedy-examples" },
+      { name: "Реализация и типичные ошибки", link: "/greedy-implementation" },
     ],
   },
   {
-    topic: "Sorting Algorithms",
+    topic: { name: "Поиски", link: "search" },
     subTopics: [
-      "Bubble Sort",
-      "Merge Sort",
-      "Insertion Sort",
-      "Quick Sort",
-      "Heap Sort",
-      "Selection Sort",
+      { name: "Бинарный поиск по массиву", link: "/search-binary-array" },
+      {
+        name: "Бинарный поиск: реализация",
+        link: "/search-binary-implementation",
+      },
+      {
+        name: "Бинарный поиск: примеры задач",
+        link: "/search-binary-examples",
+      },
+      { name: "Бинарный поиск по ответу", link: "/search-answer-binary" },
+      {
+        name: "Бинарный поиск по ответу: примеры задач",
+        link: "/search-answer-binary-examples",
+      },
+      { name: "Тернарный поиск", link: "/search-ternary" },
+      {
+        name: "Тернарный поиск: реализация",
+        link: "/search-ternary-implementation",
+      },
+      {
+        name: "Тернарный поиск: примеры задач",
+        link: "/search-ternary-examples",
+      },
+    ],
+  },
+  {
+    topic: { name: "Графы", link: "graphs" },
+    subTopics: [
+      { name: "DFS: теория", link: "/graphs-dfs-theory" },
+      { name: "DFS: реализация", link: "/graphs-dfs-implementation" },
+      { name: "DFS: примеры задач", link: "/graphs-dfs-examples" },
+      { name: "BFS: теория", link: "/graphs-bfs-theory" },
+      { name: "BFS: реализация", link: "/graphs-bfs-implementation" },
+      { name: "BFS: примеры задач", link: "/graphs-bfs-examples" },
+      { name: "Алгоритм Дейкстры", link: "/graphs-daskter" },
+      { name: "Форд-Беллман", link: "/graphs-bellman-ford" },
+      { name: "Флойд-Уоршелл", link: "/graphs-floyd-warshall" },
+      { name: "Диаметр графа", link: "/graphs-diameter" },
+    ],
+  },
+  {
+    topic: { name: "Деревья", link: "trees" },
+    subTopics: [
+      { name: "Дерево Фенвика", link: "/trees-fenwick" },
+      { name: "Дерево отрезков", link: "/trees-segment" },
+    ],
+  },
+  {
+    topic: { name: "Разреженные таблицы", link: "sparse-tables" },
+    subTopics: [
+      { name: "Sparse Table", link: "/sparse-sparse-table" },
+      { name: "Disjoint Sparse Table", link: "/sparse-disjoint-sparse-table" },
+    ],
+  },
+  {
+    topic: { name: "Динамическое программирование", link: "dp" },
+    subTopics: [
+      { name: "Основы ДП", link: "/dp-basics" },
+      { name: "Задача о рюкзаке", link: "/dp-knapsack" },
+      { name: "Пути в сетке", link: "/dp-grid-paths" },
+      {
+        name: "Наибольшая возрастающая подпоследовательность",
+        link: "/dp-lis",
+      },
+    ],
+  },
+  {
+    topic: { name: "Бор (Trie)", link: "trie" },
+    subTopics: [
+      { name: "Построение Trie", link: "/trie-construction" },
+      { name: "Поиск подстрок", link: "/trie-search" },
+      { name: "Реализация", link: "/trie-implementation" },
+      { name: "Примеры задач", link: "/trie-examples" },
+    ],
+  },
+  {
+    topic: { name: "Хеш-функция строк", link: "string-hashing" },
+    subTopics: [
+      { name: "Теория хеширования", link: "/string-hashing-theory" },
+      {
+        name: "Полиномиальное хеширование",
+        link: "/string-hashing-polynomial",
+      },
+      { name: "Примеры задач", link: "/string-hashing-examples" },
+    ],
+  },
+  {
+    topic: { name: "Алгоритм Мо", link: "mo-algorithm" },
+    subTopics: [
+      { name: "Применение", link: "/mo-algorithm-usecases" },
+      { name: "Реализация", link: "/mo-algorithm-implementation" },
+      { name: "Примеры задач", link: "/mo-algorithm-examples" },
+    ],
+  },
+  {
+    topic: { name: "Интересные факты", link: "facts" },
+    subTopics: [
+      { name: "Формулы: делители", link: "/facts-divisors" },
+      { name: "Простые числа", link: "/facts-primes" },
+      { name: "Наблюдения из теории чисел", link: "/facts-number-theory" },
+      { name: "Олимпиадные трюки", link: "/facts-tricks" },
     ],
   },
 ];
 
-export function AppSidebar() {
+export function AppSidebar({ setTabs }) {
+  function handleBreadrum(link, name) {
+    const newURL = {
+      href: "/course" + link,
+      label: name,
+    };
+    setTabs((prev) => {
+      return [...prev.slice(0, 2), newURL];
+    });
+  }
   return (
-    <Sidebar collapsible="offcanvas" variant="sidebar" className="h-full text-gray-700 text-lg">
+    <Sidebar
+      collapsible="offcanvas"
+      variant="sidebar"
+      className="h-full text-gray-700 text-lg"
+    >
       <SidebarHeader className="p-0">
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild className="py-8 px-4">
               <Link href="#">
                 {/* <Image src={"/olympiad.png"} width={500} height={500} alt="logo" /> */}
-                <span className="text-3xl font-semibold text-green-600 ">Oqy</span>
-                <span className="text-3xl font-semibold text-green-600 ">Easy</span>
+                <span className="text-3xl font-semibold text-green-600 ">
+                  Oqy
+                </span>
+                <span className="text-3xl font-semibold text-green-600 ">
+                  Easy
+                </span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -86,24 +198,32 @@ export function AppSidebar() {
         <SidebarGroup className="text-lg">
           <SidebarGroupLabel>Platform</SidebarGroupLabel>
           <SidebarGroupContent>
-            <SidebarMenu>
+            <SidebarMenu className="flex flex-col">
               {sidebarItems.map((item, index) => {
                 return (
-                  <Collapsible key={index} className="group/collapsible">
+                  <Collapsible key={uuidv4()} className="group/collapsible">
                     <SidebarMenuItem>
                       <CollapsibleTrigger asChild>
-                        <SidebarMenuButton className=" text-base">
-                          {`${index + 1}. ${item.topic}`}
+                        <SidebarMenuButton className=" text-base h-auto text-gray-800">
+                          {`${index + 1} ${item.topic.name}`}
                           <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
                         </SidebarMenuButton>
                       </CollapsibleTrigger>
                       <CollapsibleContent>
                         <SidebarMenuSub>
-                          {item.subTopics.map((sub, index) => {
+                          {item.subTopics.map((sub, subindex) => {
                             return (
-                              <SidebarMenuSubItem key={index}>
-                                <SidebarMenuSubButton asChild>
-                                  <Link href="#" className="text-base">{sub}</Link>
+                              <SidebarMenuSubItem key={uuidv4()}>
+                                <SidebarMenuSubButton asChild className="">
+                                  <Link
+                                    onClick={() => {
+                                      handleBreadrum(sub.link, sub.name);
+                                    }}
+                                    href={"/course" + sub.link}
+                                    className="text-base h-auto"
+                                  >
+                                    {`${index + 1}.${subindex + 1} ${sub.name}`}
+                                  </Link>
                                 </SidebarMenuSubButton>
                               </SidebarMenuSubItem>
                             );

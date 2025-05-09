@@ -1,3 +1,4 @@
+"use client";
 import {
   Breadcrumb,
   BreadcrumbEllipsis,
@@ -22,13 +23,67 @@ import {
   TabsContent,
 } from "@/components/ui/tabs.jsx";
 import Link from "next/link";
+import MarkDownIt from "markdown-it";
+import { useParams } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 
-export default async function Page({ params }) {
-  const { topic } = await params;
+export default function Page() {
+  const { topic } = useParams();
+  const mdRefence = useRef(
+    new MarkDownIt({
+      html: true,
+    })
+  );
+  const [data, setData] = useState(null);
+  const elementRef = useRef(null);
+
+  useEffect(() => {
+    async function fetchResources() {
+      try {
+        const response = await fetch(`http://localhost:8000/content/${topic}`);
+        if (!response.ok) {
+          throw Error("damn");
+        }
+        const data = await response.json();
+        setData((prev) => data);
+        const content = data?.theory?.content || "Hello!";
+
+        while (elementRef.current.lastElementChild) {
+          elementRef.current.removeChild(elementRef.current.lastElementChild);
+        }
+
+        if (data?.images.length > 0) {
+          const imgElement = document.createElement("img");
+          imgElement.src = data?.images[0];
+          imgElement.alt = "someImage";
+          imgElement.classList.add("w-3/4", "mx-auto", "my-2");
+          elementRef.current.appendChild(imgElement);
+        }
+
+        content.forEach((element) => {
+          const newDiv = document.createElement("div");
+          newDiv.innerHTML = mdRefence.current.render(element);
+          newDiv.classList.add(
+            "text-[0.9rem]",
+            "lg:text-[1.1rem]",
+            "font-normal",
+            "leading-relaxed",
+            "text-gray-700",
+            "text-pretty"
+          );
+
+          elementRef.current.appendChild(newDiv);
+        });
+      } catch (e) {
+        throw Error(e);
+      }
+    }
+    fetchResources();
+  }, []);
   return (
     <div className="space-y-4 col-start-1 col-end-1 pt-4">
       <div className=" col-start1 col-end-1">
-        <Tabs defaultValue="theory" className="w-full">
+        <Tabs defaultValue="theory" className="w-full space-y-4">
           <TabsList className=" p-0 border-2 border-gray-200/50 rounded-md w-60 grid grid-cols-2 text-gray-700 bg-gray-100">
             <TabsTrigger
               value="theory"
@@ -46,15 +101,21 @@ export default async function Page({ params }) {
           <TabsContent value="theory">
             <Card className="w-full">
               <CardHeader className="flex flex-col justify-start">
-                <CardTitle className="text-3xl text-green-700">
-                  Heap Sort
+                <CardTitle className="text-xl lg:text-2xl text-green-700">
+                  {data?.theory?.mainHeading}
                 </CardTitle>
                 {/* <CardDescription className=" leading-loose text-lg text-gray-700">
-                Learn about a popular sorting algorithm - heap sort
-              </CardDescription> */}
+                  Learn about a popular sorting algorithm - heap sort
+                </CardDescription> */}
               </CardHeader>
-              <CardContent>
+              <CardContent
+                id="renderMarkDown"
+                ref={elementRef}
+                className="flex flex-col gap-4"
+              >
+                {/* {data?.theory?.content[3]} */}
                 <hr />
+                {/*
                 <div className="mt-5 flex flex-col gap-4">
                   <p className="text-lg font-normal leading-loose text-gray-700">
                     Heap Sort is a{" "}
@@ -110,7 +171,7 @@ export default async function Page({ params }) {
                     </code>
                     .
                   </p>
-                </div>
+                </div> */}
               </CardContent>
             </Card>
           </TabsContent>

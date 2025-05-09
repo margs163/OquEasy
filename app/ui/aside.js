@@ -14,7 +14,7 @@ import { Calendar } from "@/components/ui/calendar";
 
 export default function AsideSections() {
   return (
-    <aside className=" col-start-2 col-end-3 mx-8 mt-4 flex flex-col gap-8">
+    <aside className="col-start-1 col-end-1 lg:col-start-2 lg:col-end-3 mx-8 mt-4 flex flex-col gap-8">
       <Card className="bg-white text-gray-700">
         <CardHeader className="py-4 px-6">
           <CardTitle className="text-green-700">Archive</CardTitle>

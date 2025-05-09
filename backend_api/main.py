@@ -7,6 +7,8 @@ from .db.auth_backend import auth_backend
 from fastapi import FastAPI, Depends
 from typing import Optional
 from contextlib import asynccontextmanager
+from fastapi.staticfiles import StaticFiles
+from .routers.content import router as content_router
 import uvicorn
 
 @asynccontextmanager
@@ -53,6 +55,9 @@ app.include_router(
 @app.get("/authenticated-route")
 async def authenticated_route(user: User = Depends(fastapi_users.current_user(active=True))):
     return {"message": f"Hello {user.email}!"}
+
+app.mount("/static", app = StaticFiles(directory="./backend_api/static"), name="static")
+app.include_router(content_router)
 
 if __name__ == "__main__":
     uvicorn.run("backend_api.main:app", host="0.0.0.0", log_level="info")

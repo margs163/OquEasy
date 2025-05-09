@@ -28,52 +28,48 @@ import { Calendar } from "@/components/ui/calendar";
 import AsideSections from "@/app/ui/aside";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { Separator } from "@/components/ui/separator";
 
 export default function Layout({ children }) {
   const [tabs, setTabs] = useState([
     { href: "/", label: "Home" },
     { href: "/course", label: "Course" },
   ]);
-  // useEffect(() => {
-  //   console.log(window.location.href);
-  //   const currentURL = window.location.href.split("/").slice(3);
-  //   const mappedURL = currentURL.map((item) => {
-  //     return { href: `/${item}`, label: item[0].toUpperCase() + item.slice(1) };
-  //   });
-  //   setTabs((prev) => {
-  //     return [prev[0], ...mappedURL];
-  //   });
-  //   console.log(mappedURL);
-  // }, []);
 
   return (
     <div className="bg-zinc-100">
-      {/* <Navbar /> */}
       <SidebarProvider defaultOpen={true} className="">
         <AppSidebar setTabs={setTabs} className="" />
-        <div className="w-full grid grid-cols-[minmax(0,_0.7fr)_minmax(0,_0.3fr)]">
-          <main className=" col-start-1 col-end-2 bg-white p-6 m-4 border-2 border-gray-200 rounded-md w-full">
-            <Breadcrumb className="">
-              <BreadcrumbList>
-                {tabs.map((item, index) => {
-                  return (
-                    <div
-                      className="flex items-center justify-center gap-2"
-                      key={index}
-                    >
-                      <BreadcrumbItem>
-                        <BreadcrumbLink asChild>
-                          <Link href={item.href} className="text-neutral-500">
-                            {item.label}
-                          </Link>
-                        </BreadcrumbLink>
-                      </BreadcrumbItem>
-                      <BreadcrumbSeparator />
-                    </div>
-                  );
-                })}
-              </BreadcrumbList>
-            </Breadcrumb>
+        <div className="w-full grid grid-cols-1 lg:grid-cols-[minmax(0,_0.7fr)_minmax(0,_0.3fr)] px-4 md:p-0">
+          <main className=" col-start-1 col-end-1 lg:col-end-2 bg-white p-6 m-4 border-2 border-gray-200 rounded-md w-full mx-auto lg:mx-4">
+            <div className="flex gap-2 items-center w-full">
+              <SidebarTrigger className="text-gray-600" />
+              <span className="w-3 h-full pb-0.5 text-gray-700">|</span>
+              <Breadcrumb className="">
+                <BreadcrumbList>
+                  {tabs.map((item, index) => {
+                    return (
+                      <div
+                        className="flex items-center justify-center gap-2"
+                        key={index}
+                      >
+                        <BreadcrumbItem>
+                          <BreadcrumbLink asChild>
+                            <Link
+                              href={item.href}
+                              className="text-neutral-500 text-xs md:text-sm"
+                            >
+                              {item.label}
+                            </Link>
+                          </BreadcrumbLink>
+                        </BreadcrumbItem>
+                        <BreadcrumbSeparator />
+                      </div>
+                    );
+                  })}
+                </BreadcrumbList>
+              </Breadcrumb>
+            </div>
             <div className="flex gap-4">{children}</div>
           </main>
           <AsideSections />

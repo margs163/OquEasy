@@ -1,7 +1,6 @@
 from sqlalchemy.orm import mapped_column, Mapped, relationship
 from sqlalchemy import Text, String, Integer, ForeignKey
 from typing import List
-from fastapi_users_db_sqlalchemy.generics import GUID
 from ..db_dependency import Base
 
 from dotenv import load_dotenv
@@ -38,10 +37,11 @@ class Content(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     topic_id: Mapped[int] = mapped_column(ForeignKey("topic.id", ondelete="CASCADE"))
+    topic_content: Mapped[str] = mapped_column(Text, nullable=False)
 
-    presentations: Mapped[List["ContentPresentation"]] = relationship("ContentPresentation", back_populates="content_rel", cascade="all, delete-orphan")
-    videos: Mapped[List['ContentVideo']] = relationship("ContentVideo", back_populates="video_rel", cascade='all, delete-orphan')
-    images: Mapped[List['ContentImage']] = relationship("ContentImage", back_populates="image_rel", cascade="all, delete-orphan")
+    presentations: Mapped[List["ContentPresentation"]] = relationship("ContentPresentation", back_populates="presentation_rel")
+    videos: Mapped[List['ContentVideo']] = relationship("ContentVideo", back_populates="video_rel")
+    images: Mapped[List['ContentImage']] = relationship("ContentImage", back_populates="image_rel")
 
     topic_rel: Mapped["Topic"] = relationship("Topic", back_populates="content_rel")
     
@@ -51,7 +51,7 @@ class ContentPresentation(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     presentation_path: Mapped[str] = mapped_column(String(1024), nullable=False)
     content_id: Mapped[int] = mapped_column(ForeignKey("content.id", ondelete="CASCADE"))
-    content_rel: Mapped["Content"] = relationship("Content", back_populates="presentations", cascade="all, delete-orphan")
+    presentation_rel: Mapped["Content"] = relationship("Content", back_populates="presentations")
 
 class ContentImage(Base):
     __tablename__ = "image_media"
@@ -59,7 +59,7 @@ class ContentImage(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     image_path: Mapped[str] = mapped_column(String(1024), nullable=False)
     content_id: Mapped[int] = mapped_column(ForeignKey("content.id", ondelete="CASCADE"))
-    image_rel: Mapped[str] = relationship("Content", back_populates="images", cascade="all, delete-orphan")
+    image_rel: Mapped["Content"] = relationship("Content", back_populates="images")
 
 class ContentVideo(Base):
     __tablename__ = "video_media"
@@ -67,4 +67,4 @@ class ContentVideo(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     video_path: Mapped[str] = mapped_column(String(1024), nullable=False)
     content_id: Mapped[int] = mapped_column(ForeignKey("content.id", ondelete="CASCADE"))
-    video_rel: Mapped["Content"] = relationship("Content",  back_populates="videos", cascade="all, delete-orphan")
+    video_rel: Mapped["Content"] = relationship("Content",  back_populates="videos")

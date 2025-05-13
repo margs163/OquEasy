@@ -1,0 +1,27 @@
+{
+  "pages": {
+    "/course/page": [
+      "static/chunks/node_modules_next_dist_1a6ee436._.js",
+      "static/chunks/app_favicon_ico_mjs_1579f9cb._.js",
+      "static/chunks/[root of the server]__8df734e4._.css",
+      "static/chunks/[turbopack]_browser_dev_hmr-client_hmr-client_ts_61fe8855._.js",
+      "static/chunks/_3b6d79a8._.js",
+      "static/chunks/node_modules_next_5d066ce6._.js",
+      "static/chunks/node_modules_date-fns_5e7b5adc._.js",
+      "static/chunks/node_modules_react-day-picker_dist_index_esm_9fc30424.js",
+      "static/chunks/node_modules_4452a062._.js",
+      "static/chunks/app_layout_0fde93a2.js",
+      "static/chunks/_e91ecae4._.js",
+      "static/chunks/app_course_layout_2eb0059e.js",
+      "static/chunks/_9d880d88._.js",
+      "static/chunks/app_course_page_c27b9cf6.js",
+      "static/chunks/[turbopack]_browser_dev_hmr-client_hmr-client_ts_49a6ea35._.js",
+      "static/chunks/node_modules_next_dist_compiled_2ce9398a._.js",
+      "static/chunks/node_modules_next_dist_client_43e3ffb8._.js",
+      "static/chunks/node_modules_next_dist_3bfaed20._.js",
+      "static/chunks/node_modules_@swc_helpers_cjs_00636ac3._.js",
+      "static/chunks/_e69f0d32._.js",
+      "static/chunks/_be317ff2._.js"
+    ]
+  }
+}

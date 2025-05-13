@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 
 export default function RegisterForm({ children }) {
   const [formValues, setFormValues] = useState({
+    id: "",
     email: "",
     firstName: "",
     lastName: "",
@@ -23,20 +24,25 @@ export default function RegisterForm({ children }) {
 
   async function handleSubmition(e) {
     e.preventDefault();
-    const response = await fetch("/api/user", {
+    const response = await fetch("http://localhost:8000/auth/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
         email: formValues.email,
-        firstName: formValues.firstName,
-        lastName: formValues.lastName,
+        first_name: formValues.firstName,
+        last_name: formValues.lastName,
         password: formValues.password,
       }),
     });
 
     if (response.ok) {
+      const data = await response.json();
+      setFormValues({
+        ...formValues,
+        id: data?.id || "damn",
+      });
       router.push("/login");
       console.log("Registration completed succesfully!");
     } else {

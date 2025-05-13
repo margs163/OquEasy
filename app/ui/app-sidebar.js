@@ -7,6 +7,18 @@ import {
   Settings,
   ChevronDown,
   ChevronUp,
+  Zap,
+  PackageSearch,
+  Waypoints,
+  Network,
+  Grid2X2,
+  Table,
+  Code,
+  Pen,
+  Hash,
+  SwatchBook,
+  Lightbulb,
+  FileCode,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -42,10 +54,24 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { useState } from "react";
 
 const sidebarItems = [
   {
-    topic: { name: "Жадные алгоритмы", link: "greedy" },
+    topic: {
+      name: "Основы Программирования на C++",
+      link: "c",
+      icon: <FileCode />,
+    },
+    subTopics: [
+      { name: "Структура программы на С++", link: "/с-intro" },
+      { name: "Условный оператор и вложенные условия", link: "/c-branching" },
+      { name: "Циклы. Оператор цикла While", link: "/c-cycles" },
+      { name: "Действительные числа. Функции cmath", link: "/c-cmath" },
+    ],
+  },
+  {
+    topic: { name: "Жадные алгоритмы", link: "greedy", icon: <Zap /> },
     subTopics: [
       { name: "Принципы жадного подхода", link: "/greedy-principles" },
       { name: "Два указателя", link: "/greedy-two-pointers" },
@@ -54,7 +80,7 @@ const sidebarItems = [
     ],
   },
   {
-    topic: { name: "Поиски", link: "search" },
+    topic: { name: "Поиски", link: "search", icon: <PackageSearch /> },
     subTopics: [
       { name: "Бинарный поиск по массиву", link: "/search-binary-array" },
       {
@@ -82,7 +108,7 @@ const sidebarItems = [
     ],
   },
   {
-    topic: { name: "Графы", link: "graphs" },
+    topic: { name: "Графы", link: "graphs", icon: <Waypoints /> },
     subTopics: [
       { name: "DFS: теория", link: "/graphs-dfs-theory" },
       { name: "DFS: реализация", link: "/graphs-dfs-implementation" },
@@ -97,21 +123,29 @@ const sidebarItems = [
     ],
   },
   {
-    topic: { name: "Деревья", link: "trees" },
+    topic: { name: "Деревья", link: "trees", icon: <Network /> },
     subTopics: [
       { name: "Дерево Фенвика", link: "/trees-fenwick" },
       { name: "Дерево отрезков", link: "/trees-segment" },
     ],
   },
   {
-    topic: { name: "Разреженные таблицы", link: "sparse-tables" },
+    topic: {
+      name: "Разреженные таблицы",
+      link: "sparse-tables",
+      icon: <Table />,
+    },
     subTopics: [
       { name: "Sparse Table", link: "/sparse-sparse-table" },
       { name: "Disjoint Sparse Table", link: "/sparse-disjoint-sparse-table" },
     ],
   },
   {
-    topic: { name: "Динамическое программирование", link: "dp" },
+    topic: {
+      name: "Динам. Программ.",
+      link: "dp",
+      icon: <Code />,
+    },
     subTopics: [
       { name: "Основы ДП", link: "/dp-basics" },
       { name: "Задача о рюкзаке", link: "/dp-knapsack" },
@@ -123,7 +157,7 @@ const sidebarItems = [
     ],
   },
   {
-    topic: { name: "Бор (Trie)", link: "trie" },
+    topic: { name: "Бор (Trie)", link: "trie", icon: <Pen size={20} /> },
     subTopics: [
       { name: "Построение Trie", link: "/trie-construction" },
       { name: "Поиск подстрок", link: "/trie-search" },
@@ -132,7 +166,11 @@ const sidebarItems = [
     ],
   },
   {
-    topic: { name: "Хеш-функция строк", link: "string-hashing" },
+    topic: {
+      name: "Хеш-функция строк",
+      link: "string-hashing",
+      icon: <Hash />,
+    },
     subTopics: [
       { name: "Теория хеширования", link: "/string-hashing-theory" },
       {
@@ -143,7 +181,7 @@ const sidebarItems = [
     ],
   },
   {
-    topic: { name: "Алгоритм Мо", link: "mo-algorithm" },
+    topic: { name: "Алгоритм Мо", link: "mo-algorithm", icon: <SwatchBook /> },
     subTopics: [
       { name: "Применение", link: "/mo-algorithm-usecases" },
       { name: "Реализация", link: "/mo-algorithm-implementation" },
@@ -151,7 +189,7 @@ const sidebarItems = [
     ],
   },
   {
-    topic: { name: "Интересные факты", link: "facts" },
+    topic: { name: "Интересные факты", link: "facts", icon: <Lightbulb /> },
     subTopics: [
       { name: "Формулы: делители", link: "/facts-divisors" },
       { name: "Простые числа", link: "/facts-primes" },
@@ -183,44 +221,54 @@ export function AppSidebar({ setTabs }) {
             <SidebarMenuButton asChild className="py-8 px-4">
               <Link href="#">
                 {/* <Image src={"/olympiad.png"} width={500} height={500} alt="logo" /> */}
-                <span className="text-3xl font-semibold text-green-600 ">
-                  Oqy
+                <span className="text-3xl font-semibold text-emerald-500 ">
+                  OqyEasy
                 </span>
-                <span className="text-3xl font-semibold text-green-600 ">
+                {/* <span className="text-3xl font-semibold text-green-600 ">
                   Easy
-                </span>
+                </span> */}
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
-      <SidebarContent>
+      <hr className="h-0.5 bg-gray-200" />
+      <SidebarContent className="pt-4">
         <SidebarGroup className="text-lg">
-          <SidebarGroupLabel>Platform</SidebarGroupLabel>
+          <SidebarGroupLabel className="uppercase text-gray-500 pl-2 tracking-widest font-semibold">
+            Platform
+          </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu className="flex flex-col">
               {sidebarItems.map((item, index) => {
                 return (
-                  <Collapsible key={uuidv4()} className="group/collapsible">
+                  <Collapsible
+                    key={uuidv4()}
+                    className="group/collapsible data-[state=open]:text-emerald-600"
+                  >
                     <SidebarMenuItem>
                       <CollapsibleTrigger asChild>
-                        <SidebarMenuButton className=" text-base h-auto text-gray-800">
+                        <SidebarMenuButton className="text-base h-auto font-medium px-2">
+                          {item.topic.icon}
                           {`${index + 1} ${item.topic.name}`}
                           <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
                         </SidebarMenuButton>
                       </CollapsibleTrigger>
-                      <CollapsibleContent>
-                        <SidebarMenuSub>
+                      <CollapsibleContent className="">
+                        <SidebarMenuSub className="border-l-4 rounded border-l-emerald-400 ml-4">
                           {item.subTopics.map((sub, subindex) => {
                             return (
-                              <SidebarMenuSubItem key={uuidv4()}>
+                              <SidebarMenuSubItem
+                                key={uuidv4()}
+                                className="text-gray-400"
+                              >
                                 <SidebarMenuSubButton asChild className="">
                                   <Link
                                     onClick={() => {
                                       handleBreadrum(sub.link, sub.name);
                                     }}
                                     href={"/course" + sub.link}
-                                    className="text-base h-auto"
+                                    className="text-base h-auto font-medium hover:text-emerald-700"
                                   >
                                     {`${index + 1}.${subindex + 1} ${sub.name}`}
                                   </Link>

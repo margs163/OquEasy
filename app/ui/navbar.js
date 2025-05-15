@@ -12,17 +12,17 @@ export default function Navbar() {
         <span className="text-3xl font-semibold text-green-900 ">Easy</span>
       </div>
       <ul className="w-full list-none flex justify-center items-center gap-8 px-2">
-        <li className="ml-auto">
+        <li className="ml-auto hidden md:flex">
           <Link className=" hover:text-green-600" href={"#"}>
             About
           </Link>
         </li>
-        <li>
-          <Link className=" hover:text-green-600" href={"#"}>
-            News
+        <li className="hidden md:flex">
+          <Link className=" hover:text-green-600" href={"/course"}>
+            Course
           </Link>
         </li>
-        <li>
+        <li className="hidden md:flex">
           <Link className=" hover:text-green-600" href={"#"}>
             Contact
           </Link>
@@ -32,7 +32,7 @@ export default function Navbar() {
             <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
-          <Link href={"#"}>
+          <Link href={"#"} className="hidden md:flex">
             <Button
               variant="outline"
               className=" hover:bg-gray-100 hover:text-gray-800 hover:border-gray-300"

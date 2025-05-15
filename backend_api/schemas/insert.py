@@ -5,94 +5,111 @@ from .content import Topic, Module, ContentImage, ContentPresentation, Content
 from ..db_dependency import get_async_session
 import json
 
-first_module = [
+sidebar_items = [
   {
-    "module": "Жадные алгоритмы",
-    "topic": "Принципы жадного подхода",
-    "mainHeading": "Суть жадных алгоритмов и когда они работают",
-    "content": [
-      "Жадные алгоритмы строятся на идее последовательного выбора **локально наилучшего решения** с надеждой, что оно приведёт к **глобально оптимальному результату**. Это значит, что на каждом шаге алгоритм выбирает самый выгодный с точки зрения текущей ситуации вариант, **не пересматривая предыдущие решения**.",
-      "Такой подход позволяет значительно упростить реализацию алгоритма и уменьшить его временную сложность. Жадные алгоритмы часто работают **быстрее** и требуют **меньше памяти**, чем методы динамического программирования или полный перебор.",
-      "Однако жадный метод применим не всегда. Он корректен только в задачах, где выполняется **свойство оптимальности** — когда локальные решения ведут к глобальному. Это нужно либо **доказать теоретически**, либо подтвердить с помощью контрпримеров и тестов.",
-      "Типичные признаки задач, решаемых жадным методом:\n- можно сформулировать чёткую жадную стратегию;\n- данные удобно отсортировать;\n- на каждом шаге можно выбрать наилучший элемент по простому критерию."
-    ]
+    "topic": {"name": "Поиски", "link": "search", "icon": "PackageSearch"},
+    "subTopics": [
+      {"name": "Бинарный поиск по массиву", "link": "/search-binary-array"},
+      {"name": "Бинарный поиск: реализация", "link": "/search-binary-implementation"},
+      {"name": "Бинарный поиск: примеры задач", "link": "/search-binary-examples"},
+      {"name": "Бинарный поиск по ответу", "link": "/search-answer-binary"},
+      {"name": "Бинарный поиск по ответу: примеры задач", "link": "/search-answer-binary-examples"},
+      {"name": "Тернарный поиск", "link": "/search-ternary"},
+      {"name": "Тернарный поиск: реализация", "link": "/search-ternary-implementation"},
+      {"name": "Тернарный поиск: примеры задач", "link": "/search-ternary-examples"},
+    ],
   },
   {
-    "module": "Жадные алгоритмы",
-    "topic": "Два указателя",
-    "mainHeading": "Метод двух указателей: мощный инструмент в арсенале алгоритмиста",
-    "content": [
-      "Метод двух указателей — это техника оптимизации, используемая в задачах, где требуется анализировать **отрезки**, **пары элементов** или **подмассивы**. Особенно он эффективен при работе с **отсортированными массивами**, помогая снизить сложность с `O(n^2)` до `O(n)` или `O(n log n)`.",
-      "Суть метода:\n- используется два индекса (например, `i` и `j`);\n- один фиксирует начало отрезка, другой — его конец;\n- указатели сдвигаются в зависимости от условий задачи.",
-      "Жадный подход и метод двух указателей часто применяются вместе. Например, в задаче покрытия отрезков точками: сначала сортируем отрезки, затем сдвигаем указатели, выбирая минимум точек для покрытия.",
-      "Типичные задачи:\n- нахождение подотрезка с заданной суммой;\n- подсчёт количества подходящих пар;\n- задачи на «скользящее окно».\n\nЭтот метод позволяет **эффективно перебирать отрезки** и **сохранять высокую производительность алгоритма**."
-    ]
+    "topic": {"name": "Графы", "link": "graphs", "icon": "Waypoints"},
+    "subTopics": [
+      {"name": "DFS: теория", "link": "/graphs-dfs-theory"},
+      {"name": "DFS: реализация", "link": "/graphs-dfs-implementation"},
+      {"name": "DFS: примеры задач", "link": "/graphs-dfs-examples"},
+      {"name": "BFS: теория", "link": "/graphs-bfs-theory"},
+      {"name": "BFS: реализация", "link": "/graphs-bfs-implementation"},
+      {"name": "BFS: примеры задач", "link": "/graphs-bfs-examples"},
+      {"name": "Алгоритм Дейкстры", "link": "/graphs-daskter"},
+      {"name": "Форд-Беллман", "link": "/graphs-bellman-ford"},
+      {"name": "Флойд-Уоршелл", "link": "/graphs-floyd-warshall"},
+      {"name": "Диаметр графа", "link": "/graphs-diameter"},
+    ],
   },
   {
-    "module": "Жадные алгоритмы",
-    "topic": "Примеры классических задач",
-    "mainHeading": "Типовые задачи, которые решаются жадным методом",
-    "content": [
-      "Существует ряд классических задач, которые можно эффективно решить с помощью жадных алгоритмов:",
-      "- **Задача о мероприятиях (activity selection):** выбрать максимальное число непересекающихся интервалов. Стратегия — сортировка по времени окончания и последовательный выбор совместимых интервалов.",
-      "- **Размен монет:** минимизировать количество монет для заданной суммы. Работает, если номиналы «правильные» (например, 1, 5, 10, 25). При нестандартных номиналах жадность может не сработать.",
-      "- **Покрытие отрезков:** покрыть все точки минимальным числом отрезков. Жадная стратегия — выбрать самый «дальнобойный» отрезок, начинающийся до текущей точки.",
-      "- **Задача о дробном рюкзаке:** можно брать предметы частично. Оптимальное решение — брать элементы с **наивысшей удельной стоимостью**. Это классическая жадная задача, в отличие от 0/1-рюкзака.",
-      "Во всех этих задачах важно **обосновать жадную стратегию**, доказать её корректность или привести контрпример в случае, если она не работает."
-    ]
+    "topic": {"name": "Деревья", "link": "trees", "icon": "Network"},
+    "subTopics": [
+      {"name": "Дерево Фенвика", "link": "/trees-fenwick"},
+      {"name": "Дерево отрезков", "link": "/trees-segment"},
+    ],
   },
   {
-    "module": "Жадные алгоритмы",
-    "topic": "Реализация и типичные ошибки",
-    "mainHeading": "На что обратить внимание при программировании жадных решений",
-    "content": [
-      "**1. Выбор критерия сортировки.**  \nОсновной шаг в жадных алгоритмах — правильно отсортировать элементы. Ошибка в выборе критерия может полностью испортить результат.",
-      "**2. Предположение, что жадность работает всегда.**  \nЭто не так. Перед реализацией важно убедиться, что задача действительно допускает жадное решение. Лучше всего — **доказать это** или привести контрпример.",
-      "**3. Обработка краевых случаев.**  \nЧасто забывают обработать:\n- пустые массивы;\n- одинаковые значения;\n- граничные условия (всё покрывается одним элементом и т.п.).",
-      "**4. Неправильная реализация двух указателей.**  \nОшибки при движении указателей могут привести к пропущенным случаям или выходу за границы массива.",
-      "**5. Недостаточное тестирование.**  \nЖадные алгоритмы часто «ломаются» на специальных тестах. Тестируй на:\n- минимальных входах;\n- максимальных входах;\n- тщательно продуманных контрпримерах.",
-      "Правильно реализованный жадный алгоритм может стать **быстрым и надёжным решением**, но требует аккуратности и чёткого понимания задачи."
-    ]
-  }
+    "topic": {"name": "Разреженные таблицы", "link": "sparse", "icon": "Table"},
+    "subTopics": [
+      {"name": "Sparse Table", "link": "/sparse-sparse-table"},
+      {"name": "Disjoint Sparse Table", "link": "/sparse-disjoint-sparse-table"},
+    ],
+  },
+  {
+    "topic": {"name": "Динам. Программ.", "link": "dp", "icon": "Code"},
+    "subTopics": [
+      {"name": "Основы ДП", "link": "/dp-basics"},
+      {"name": "Задача о рюкзаке", "link": "/dp-knapsack"},
+      {"name": "Пути в сетке", "link": "/dp-grid-paths"},
+      {"name": "Наибольшая возрастающая подпоследовательность", "link": "/dp-lis"},
+    ],
+  },
+  {
+    "topic": {"name": "Бор (Trie)", "link": "trie", "icon": "Pen"},
+    "subTopics": [
+      {"name": "Построение Trie", "link": "/trie-construction"},
+      {"name": "Поиск подстрок", "link": "/trie-search"},
+      {"name": "Реализация", "link": "/trie-implementation"},
+      {"name": "Примеры задач", "link": "/trie-examples"},
+    ],
+  },
+  {
+    "topic": {"name": "Хеш-функция строк", "link": "string-hashing", "icon": "Hash"},
+    "subTopics": [
+      {"name": "Теория хеширования", "link": "/string-hashing-theory"},
+      {"name": "Полиномиальное хеширование", "link": "/string-hashing-polynomial"},
+      {"name": "Примеры задач", "link": "/string-hashing-examples"},
+    ],
+  },
+  {
+    "topic": {"name": "Алгоритм Мо", "link": "mo-algorithm", "icon": "SwatchBook"},
+    "subTopics": [
+      {"name": "Применение", "link": "/mo-algorithm-usecases"},
+      {"name": "Реализация", "link": "/mo-algorithm-implementation"},
+      {"name": "Примеры задач", "link": "/mo-algorithm-examples"},
+    ],
+  },
+  {
+    "topic": {"name": "Интересные факты", "link": "facts", "icon": "Lightbulb"},
+    "subTopics": [
+      {"name": "Формулы: делители", "link": "/facts-divisors"},
+      {"name": "Простые числа", "link": "/facts-primes"},
+      {"name": "Наблюдения из теории чисел", "link": "/facts-number-theory"},
+      {"name": "Олимпиадные трюки", "link": "/facts-tricks"},
+    ],
+  },
 ]
 
-async def insert_some_data():
-    module = Module(module_name="greedy")
-    topics = [
-        Topic(
-            topic_name="greedy-principles", 
-            content_rel=Content(
-                    topic_content=json.dumps(first_module[0]), 
-                    presentations=[ContentPresentation(presentation_path="http://localhost:8000/static/greedy/greedy-principles/greedy-algorithms.pdf")],
-                    images=[ContentImage(image_path="http://localhost:8000/static/greedy/greedy-principles/example.jpg")]
-                    )),
-        Topic(
-            topic_name="greedy-two-pointers", 
-            content_rel=Content(
-                    topic_content=json.dumps(first_module[1]), 
-                    presentations=[ContentPresentation(presentation_path="http://localhost:8000/static/greedy/greedy-principles/greedy-algorithms.pdf")],
-                    )),
-        Topic(
-            topic_name="greedy-examples", 
-            content_rel=Content(
-                    topic_content=json.dumps(first_module[2]), 
-                    presentations=[ContentPresentation(presentation_path="http://localhost:8000/static/greedy/greedy-principles/greedy-algorithms.pdf")],
-                    images=[ContentImage(image_path="http://localhost:8000/static/greedy/greedy-principles/example.jpg")]
-                    )),
-        Topic(
-            topic_name="greedy-implementation", 
-            content_rel=Content(
-                    topic_content=json.dumps(first_module[3]), 
-                    presentations=[ContentPresentation(presentation_path="http://localhost:8000/static/greedy/greedy-principles/greedy-algorithms.pdf")],
-                    )),
-    ]
-    module.topics = topics
+# with open("./backend_api/schemas/some.md", 'r', encoding="utf-8") as file:
+#   content = file.read()
+#   first_module[0]["content"].append(content)
 
-    async for session in get_async_session():
-      async with session.begin():
-        session.add(module)
-    
-    print("[DEBUG]: Successfully inserted the module!")
+# with open("./backend_api/schemas/another.md", 'r', encoding="utf-8") as file:
+#   content = file.read()
+#   first_module[1]["content"].append(content)
+
+async def insert_some_data():
+  modules = []
+  async for session in get_async_session():
+    async with session.begin():
+      for module in sidebar_items:
+        modules.append(Module(module_name = module["topic"]["link"]))
+
+      session.add_all(modules)
+
 
 async def select_some_data(topic_name: str):
   try:

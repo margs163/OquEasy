@@ -1,6 +1,26 @@
-import { Megaphone, ServerCrash, HeartPulse } from "lucide-react";
+"use client";
+import {
+  Megaphone,
+  ServerCrash,
+  HeartPulse,
+  CalendarDays,
+  Calendar1,
+  PanelRight,
+  Clock,
+  Book,
+  Presentation,
+  FileText,
+  FileVideo,
+} from "lucide-react";
 import Link from "next/link";
-
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import {
   Card,
   CardContent,
@@ -10,42 +30,304 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-import { Calendar } from "@/components/ui/calendar";
+import { Calendar as CalendarComp } from "@/components/ui/calendar";
+import { Calendar as CalendarIcon } from "lucide-react";
+import { useState } from "react";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { DayPicker } from "react-day-picker";
+import { Description } from "@radix-ui/react-dialog";
 
-export default function AsideSections() {
+const news = [
+  {
+    title: "Тестовое Соревнование",
+    date: "Mай 13, 2025",
+    time: "16:00",
+    description: "Практикуй свои скиллы скиллы в специальном соревновании",
+  },
+  {
+    title: "Вебинар решения зада",
+    date: "May 20, 2025",
+    time: "5:00 PM",
+    description: "Смотри как профессионалы решают сложные задачи",
+  },
+  ,
+];
+
+export default function AsideSections({ data }) {
+  const [date, setDate] = useState(new Date());
+  const presentations = data?.presentations;
+  const videos = data?.videos;
+  const fileNames =
+    presentations &&
+    presentations.map((item) => {
+      return item.split("/").at(-1);
+    });
+  console.log(fileNames);
+
+  const isMobile = useIsMobile();
   return (
-    <aside className="col-start-1 col-end-1 lg:col-start-2 lg:col-end-3 mx-8 mt-4 flex flex-col gap-8">
-      <Card className="bg-white text-gray-700">
-        <CardHeader className="py-4 px-6">
-          <CardTitle className="text-green-700">Archive</CardTitle>
-        </CardHeader>
-        <hr className="w-full border-1 mb-2" />
-        <CardContent className="p-4 pt-0">
-          <ul className="flex flex-col gap-1 text-sm">
-            <li className="flex justify-start p-2 rounded-md gap-2 hover:bg-gray-100">
-              <Megaphone size={22} className=" text-green-600" />
-              <Link href={"#"}>Announcement of November</Link>
-            </li>
-            <hr />
-            <li className="flex justify-start p-2 rounded-md gap-2 hover:bg-gray-100">
-              <ServerCrash size={22} className="text-green-600" />
-              <Link href={"#"}>Hardest question</Link>
-            </li>
-            <hr />
-            <li className="flex justify-start hover:cursor-pointer gap-2 p-2 rounded-xl hover:bg-gray-100/80">
-              <HeartPulse size={22} className="text-green-600" />
-              <Link href={"#"}>I am edging</Link>
-            </li>
-            <hr />
-          </ul>
-        </CardContent>
-      </Card>
-      <Calendar
-        mode="single"
-        selected={new Date()}
-        // onSelect={}
-        className=" bg-white rounded-xl border shadow-sm"
-      />
+    <aside className="lg:col-start-2 lg:col-end-3 lg:mx-4 lg:ml-8 lg:mt-4 lg:flex lg:flex-col lg:gap-8 h-8">
+      {isMobile ? (
+        <Sheet className="bg-white">
+          <SheetTrigger>
+            <PanelRight
+              size={18}
+              className="p-1.5 rounded-lg bg-white hover:bg-emerald-500 hover:text-white text-emerald-500 border border-slate-100 flex-shrink-0 box-content shadow-sm"
+            />
+          </SheetTrigger>
+          <SheetContent className="bg-white w-[320px] p-6 flex flex-col gap-10">
+            <SheetHeader className={"hidden"}>
+              <SheetTitle>Ты уверен?</SheetTitle>
+              <SheetDescription>
+                This action cannot be undone. This will permanently delete your
+                account and remove your data from our servers.
+              </SheetDescription>
+            </SheetHeader>
+            <div className="flex flex-col gap-4">
+              <div className="flex gap-2 justify-start items-center">
+                <CalendarIcon size={20} />
+                <h3 className="text-lg font-semibold text-gray-800">{`${date.toLocaleString(
+                  "default",
+                  {
+                    month: "long",
+                  }
+                )} ${date.getFullYear()}`}</h3>
+              </div>
+              <CalendarComp
+                mode="single"
+                selected={date}
+                onSelect={setDate}
+                className="bg-slate-100/80 rounded-xl text-xs"
+              />
+            </div>
+            <div className="space-y-2">
+              <div className="flex gap-2 justify-start items-center">
+                <Clock size={22} />
+                <h3 className="text-lg font-semibold text-gray-800">
+                  Последние Новости
+                </h3>
+              </div>
+              <div className="space-y-4">
+                {news.map((item, index) => {
+                  return (
+                    <div
+                      key={index}
+                      className="border-l-[3px] rounded-md border-emerald-500 p-4 bg-slate-50 cursor-pointer shadow-sm"
+                    >
+                      <h3 className="text-lg font-medium">{item.title}</h3>
+                      <div className="text-xs flex gap-2 text-gray-600 leading-relaxed mb-2">
+                        <p>{item.date}</p>
+                        <p>{item.time}</p>
+                      </div>
+                      <p className=" leading-snug">{item.description}</p>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+            <div className="flex flex-col gap-4">
+              <div className="flex gap-2 justify-start items-center">
+                <Book size={22} />
+                <h3 className="text-lg font-semibold text-gray-800">
+                  Связанные Ресурсы
+                </h3>
+              </div>
+              <div className="">
+                {presentations &&
+                  presentations.map((item, index) => {
+                    return (
+                      <div key={index} className="flex flex-col gap-4">
+                        <div className="flex gap-4 items-center">
+                          <div>
+                            <FileText
+                              size={22}
+                              className="box-content p-2 text-indigo-500 bg-slate-100 rounded-lg"
+                            />
+                          </div>
+                          <div>
+                            <a
+                              href={item}
+                              download={
+                                fileNames[index][0].toUpperCase() +
+                                fileNames[index].slice(1)
+                              }
+                            >
+                              <h3 className="text-base font-medium">
+                                {fileNames[index][0].toUpperCase() +
+                                  fileNames[index].slice(1)}
+                              </h3>
+                            </a>
+                            <p className="text-xs text-gray-500 font-medium">
+                              PDF • 8 min read
+                            </p>
+                          </div>
+                        </div>
+                        <hr className="w-full h-[2px] bg-gray-100 " />
+                      </div>
+                    );
+                  })}
+              </div>
+            </div>
+            <div className="flex flex-col gap-4">
+              <div className="flex gap-2 justify-start items-center">
+                <FileVideo size={22} />
+                <h3 className="text-lg font-semibold text-gray-800">
+                  Видео Материалы
+                </h3>
+              </div>
+              <div className="">
+                {videos &&
+                  videos.map((item, index) => {
+                    return (
+                      <div key={index} className="flex flex-col gap-4">
+                        <div className="flex gap-4 items-center">
+                          <div>
+                            <FileText
+                              size={22}
+                              className="box-content p-2 text-indigo-500 bg-slate-100 rounded-lg"
+                            />
+                          </div>
+                          <div>
+                            <a href={item}>
+                              <h3 className="text-base font-medium">{item}</h3>
+                            </a>
+                            <p className="text-xs text-gray-500 font-medium">
+                              Video • 10 min watch
+                            </p>
+                          </div>
+                        </div>
+                        <hr className="w-full h-[2px] bg-gray-100 " />
+                      </div>
+                    );
+                  })}
+              </div>
+            </div>
+          </SheetContent>
+        </Sheet>
+      ) : (
+        <Card className="bg-white text-gray-700 shadow-sm rounded-xl">
+          <CardContent className="p-6 flex flex-col gap-8">
+            <div className="flex flex-col gap-4">
+              <div className="flex gap-2 justify-start items-center">
+                <CalendarIcon size={20} />
+                <h3 className="text-lg font-semibold text-gray-800">{`${date.toLocaleString(
+                  "default",
+                  {
+                    month: "long",
+                  }
+                )} ${date.getFullYear()}`}</h3>
+              </div>
+              <CalendarComp
+                mode="single"
+                selected={date}
+                onSelect={setDate}
+                className="bg-slate-100/80 rounded-xl text-xs"
+              />
+            </div>
+            <div className="space-y-2">
+              <div className="flex gap-2 justify-start items-center">
+                <Clock size={22} />
+                <h3 className="text-lg font-semibold text-gray-800">
+                  Последние Новости
+                </h3>
+              </div>
+              <div className="space-y-4">
+                {news.map((item, index) => {
+                  return (
+                    <div
+                      key={index}
+                      className="border-l-[3px] rounded-md border-emerald-500 p-4 bg-slate-50 cursor-pointer shadow-sm"
+                    >
+                      <h3 className="text-lg font-medium">{item.title}</h3>
+                      <div className="text-xs flex gap-2 text-gray-600 leading-relaxed mb-2">
+                        <p>{item.date}</p>
+                        <p>{item.time}</p>
+                      </div>
+                      <p className=" leading-snug">{item.description}</p>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+            <div className="flex flex-col gap-4">
+              <div className="flex gap-2 justify-start items-center">
+                <Book size={22} />
+                <h3 className="text-lg font-semibold text-gray-800">
+                  Связанные Ресурсы
+                </h3>
+              </div>
+              <div className=" flex flex-col gap-3">
+                {presentations &&
+                  presentations.map((item, index) => {
+                    return (
+                      <div key={index} className="flex flex-col gap-4">
+                        <div className="flex gap-4 items-center">
+                          <div>
+                            <FileText
+                              size={22}
+                              className="box-content p-2 text-indigo-500 bg-slate-100 rounded-lg"
+                            />
+                          </div>
+                          <div>
+                            <a
+                              href={item}
+                              download={
+                                fileNames[index][0].toUpperCase() +
+                                fileNames[index].slice(1)
+                              }
+                            >
+                              <h3 className="text-base font-medium">
+                                {fileNames[index][0].toUpperCase() +
+                                  fileNames[index].slice(1)}
+                              </h3>
+                            </a>
+                            <p className="text-xs text-gray-500 font-medium">
+                              PDF • 8 min read
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+              </div>
+            </div>
+            <div className="flex flex-col gap-4">
+              <div className="flex gap-2 justify-start items-center">
+                <FileVideo size={22} />
+                <h3 className="text-lg font-semibold text-gray-800">
+                  Видео Материалы
+                </h3>
+              </div>
+              <div className="">
+                {videos &&
+                  videos.map((item, index) => {
+                    return (
+                      <div key={index} className="flex flex-col gap-4">
+                        <div className="flex gap-4 items-center">
+                          <div>
+                            <FileText
+                              size={22}
+                              className="box-content p-2 text-indigo-500 bg-slate-100 rounded-lg"
+                            />
+                          </div>
+                          <div>
+                            <a href={item}>
+                              <h3 className="text-base font-medium">{item}</h3>
+                            </a>
+                            <p className="text-xs text-gray-500 font-medium">
+                              Video • 10 min watch
+                            </p>
+                          </div>
+                        </div>
+                        <hr className="w-full h-[2px] bg-gray-100 " />
+                      </div>
+                    );
+                  })}
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
     </aside>
   );
 }

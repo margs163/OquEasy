@@ -10,14 +10,6 @@ export default function LoginForm({ children }) {
     email: "",
     password: "",
   });
-  const [formSubmitted, setFormSubmited] = useState(false);
-
-  useEffect(() => {
-    fetch("localhost:8000/api/account/login")
-      .then((res) => res.json())
-      .then((data) => {});
-  });
-
   const router = useRouter();
 
   function handleChange(e) {
@@ -29,20 +21,29 @@ export default function LoginForm({ children }) {
 
   async function handleSubmition(e) {
     e.preventDefault();
-    setFormSubmited(!formSubmitted);
 
-    // const signInData = await signIn("credentials", {
-    //   email: formValues.email,
-    //   password: formValues.password,
-    //   redirect: false,
-    // });
+    const response = await fetch("http://localhost:8000/auth/jwt/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      credentials: "include",
+      body: new URLSearchParams({
+        username: formValues.email,
+        password: formValues.password,
+      }),
+    });
 
-    // if (signInData?.error) {
-    //   console.log(signInData?.error);
-    // } else {
-    //   console.log(signInData);
-    //   router.push("/profile");
-    // }
+    console.log(response.headers);
+
+    // const data = await response.json();
+
+    if (response.ok) {
+      router.push("/course");
+      console.log("Registration completed succesfully!");
+    } else {
+      alert("Login failed!");
+    }
   }
 
   return (

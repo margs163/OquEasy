@@ -33,6 +33,8 @@ import AsideSections from "@/app/ui/aside";
 
 export default function Page() {
   const { topic } = useParams();
+  const decodedTopic =
+    decodeURIComponent(topic.split("-")[0]) + "-" + topic.split("-")[1];
   const mdRefence = useRef(
     new MarkDownIt({
       html: true,
@@ -112,19 +114,17 @@ export default function Page() {
             </TabsList>
             <TabsContent value="theory">
               <Card className="w-full bg-white shadow-sm rounded-xl">
-                <CardHeader className="flex flex-col justify-start">
-                  <CardTitle className="text-xl lg:text-3xl text-emerald-700 font-bold tracking-[0.015rem]">
+                <CardHeader className="flex flex-col justify-start pb-0">
+                  <CardTitle className="text-3xl lg:text-3xl text-emerald-600 font-bold tracking-[0.015rem]">
                     {data?.theory?.mainHeading}
-                    {/* Damn this bitch really be hittin */}
+                    <hr className="mt-4" />
                   </CardTitle>
                 </CardHeader>
                 <CardContent
                   id="renderMarkDown"
                   ref={elementRef}
-                  className="flex flex-col gap-4"
+                  className="flex flex-col gap-4 topic"
                 >
-                  {/* {data?.theory?.content[3]} */}
-                  <hr />
                   {/*
                 <div className="mt-5 flex flex-col gap-4">
                 <p className="text-lg font-normal leading-loose text-gray-700">
@@ -185,7 +185,9 @@ export default function Page() {
                 </CardContent>
               </Card>
             </TabsContent>
-            <TabsContent value="practice">This is a practice tab</TabsContent>
+            <TabsContent value="practice">
+              This is a practice goddamn tab
+            </TabsContent>
           </Tabs>
         </div>
       </div>

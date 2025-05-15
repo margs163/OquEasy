@@ -56,3 +56,149 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+.topic {
+  padding-inline: 2rem;
+  padding-top: 0;
+}
+
+.topic h1 {
+  display: none;
+  /* font-size: 1.75rem;
+  line-height: 2rem;
+  font-weight: 700;
+  color: #059669;
+  margin-bottom: 1.25rem; */
+}
+
+.topic h2 {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-weight: 700;
+  color: #059669;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+
+.topic p {
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 400;
+  color: #6b7280;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.topic h3 {
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 400;
+  color: #6b7280;
+  /* margin-top: 0.5rem;
+  margin-bottom: 0.5rem; */
+}
+
+.topic {
+  table {
+    width: 100%; /* Make the table take up the full width of its container */
+    border-collapse: collapse; /* Remove gaps between table cells */
+    margin: 1rem 0; /* Add some spacing above and below the table */
+    font-size: 1rem; /* Set a readable font size */
+    text-align: left; /* Align text to the left */
+    border-width: 1px;
+    border-radius: 16px;
+  }
+
+  th,
+  td {
+    padding: 0.75rem; /* Add padding inside table cells */
+    border: 1px solid #e5e7eb; /* Add a light border around cells */
+  }
+
+  th {
+    /* background-color: #f3f4f6; 
+    font-weight: 700; 
+    color: #1f2937; / */
+    color: #ffffff;
+    font-weight: 600;
+    background-color: #10b981;
+  }
+
+  tr:nth-child(even) {
+    background-color: #f9fafb; /* Add a light background for even rows */
+  }
+
+  tr:hover {
+    background-color: #e5e7eb; /* Highlight row on hover */
+  }
+}
+.topic pre {
+  width: 100%;
+  overflow: auto;
+  padding: 1rem;
+  background-color: #f3f4f6;
+  border-radius: 1rem;
+  border-width: 1px;
+  border-color: #e5e7eb;
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.topic pre code {
+  font-size: 0.85rem;
+  border-radius: 0;
+  color: #6b7280;
+  background: transparent;
+}
+
+.topic code {
+  padding: 0.2rem;
+  border-radius: 0.375rem;
+  color: #047857;
+  font-weight: 600;
+  background-color: #f3f4f6;
+}
+
+.topic ul {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.topic ul li {
+  list-style: disc;
+  list-style-position: inside;
+  font-size: 1rem;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #6b7280;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+@media (min-width: 1024px) {
+  .topic p {
+    font-size: 1.1rem;
+    font-weight: 400;
+    line-height: 1.75rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .topic ul li {
+    list-style: disc;
+    list-style-position: inside;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    font-weight: 400;
+    color: #6b7280;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .topic h3 {
+    font-size: 1.1rem;
+    font-weight: 400;
+    line-height: 1.5rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+}

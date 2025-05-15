@@ -10,6 +10,7 @@ import {
   Book,
   Presentation,
   FileText,
+  FileVideo,
 } from "lucide-react";
 import Link from "next/link";
 import {
@@ -38,16 +39,16 @@ import { Description } from "@radix-ui/react-dialog";
 
 const news = [
   {
-    title: "Mock Competition",
-    date: "May 13, 2025",
-    time: "4:00 PM",
-    description: "Practice your skills in a timed competition environment.",
+    title: "Тестовое Соревнование",
+    date: "Mай 13, 2025",
+    time: "16:00",
+    description: "Практикуй свои скиллы скиллы в специальном соревновании",
   },
   {
-    title: "Live Problem Solving",
+    title: "Вебинар решения зада",
     date: "May 20, 2025",
     time: "5:00 PM",
-    description: "Watch an expert solve hard problems in real-time.",
+    description: "Смотри как профессионалы решают сложные задачи",
   },
   ,
 ];
@@ -55,6 +56,7 @@ const news = [
 export default function AsideSections({ data }) {
   const [date, setDate] = useState(new Date());
   const presentations = data?.presentations;
+  const videos = data?.videos;
   const fileNames =
     presentations &&
     presentations.map((item) => {
@@ -75,7 +77,7 @@ export default function AsideSections({ data }) {
           </SheetTrigger>
           <SheetContent className="bg-white w-[320px] p-6 flex flex-col gap-10">
             <SheetHeader className={"hidden"}>
-              <SheetTitle>Are you absolutely sure?</SheetTitle>
+              <SheetTitle>Ты уверен?</SheetTitle>
               <SheetDescription>
                 This action cannot be undone. This will permanently delete your
                 account and remove your data from our servers.
@@ -102,7 +104,7 @@ export default function AsideSections({ data }) {
               <div className="flex gap-2 justify-start items-center">
                 <Clock size={22} />
                 <h3 className="text-lg font-semibold text-gray-800">
-                  Archived News
+                  Последние Новости
                 </h3>
               </div>
               <div className="space-y-4">
@@ -127,7 +129,7 @@ export default function AsideSections({ data }) {
               <div className="flex gap-2 justify-start items-center">
                 <Book size={22} />
                 <h3 className="text-lg font-semibold text-gray-800">
-                  Related Sources
+                  Связанные Ресурсы
                 </h3>
               </div>
               <div className="">
@@ -143,16 +145,58 @@ export default function AsideSections({ data }) {
                             />
                           </div>
                           <div>
-                            <h3 className="text-base font-medium">
-                              {fileNames[index][0].toUpperCase() +
-                                fileNames[index].slice(1)}
-                            </h3>
+                            <a
+                              href={item}
+                              download={
+                                fileNames[index][0].toUpperCase() +
+                                fileNames[index].slice(1)
+                              }
+                            >
+                              <h3 className="text-base font-medium">
+                                {fileNames[index][0].toUpperCase() +
+                                  fileNames[index].slice(1)}
+                              </h3>
+                            </a>
                             <p className="text-xs text-gray-500 font-medium">
                               PDF • 8 min read
                             </p>
                           </div>
                         </div>
-                        <hr className="w-full h-[2px] bg-gray-100" />
+                        <hr className="w-full h-[2px] bg-gray-100 " />
+                      </div>
+                    );
+                  })}
+              </div>
+            </div>
+            <div className="flex flex-col gap-4">
+              <div className="flex gap-2 justify-start items-center">
+                <FileVideo size={22} />
+                <h3 className="text-lg font-semibold text-gray-800">
+                  Видео Материалы
+                </h3>
+              </div>
+              <div className="">
+                {videos &&
+                  videos.map((item, index) => {
+                    return (
+                      <div key={index} className="flex flex-col gap-4">
+                        <div className="flex gap-4 items-center">
+                          <div>
+                            <FileText
+                              size={22}
+                              className="box-content p-2 text-indigo-500 bg-slate-100 rounded-lg"
+                            />
+                          </div>
+                          <div>
+                            <a href={item}>
+                              <h3 className="text-base font-medium">{item}</h3>
+                            </a>
+                            <p className="text-xs text-gray-500 font-medium">
+                              Video • 10 min watch
+                            </p>
+                          </div>
+                        </div>
+                        <hr className="w-full h-[2px] bg-gray-100 " />
                       </div>
                     );
                   })}
@@ -162,7 +206,6 @@ export default function AsideSections({ data }) {
         </Sheet>
       ) : (
         <Card className="bg-white text-gray-700 shadow-sm rounded-xl">
-          {/* <hr className="w-full border-1 mb-2" /> */}
           <CardContent className="p-6 flex flex-col gap-8">
             <div className="flex flex-col gap-4">
               <div className="flex gap-2 justify-start items-center">
@@ -185,7 +228,7 @@ export default function AsideSections({ data }) {
               <div className="flex gap-2 justify-start items-center">
                 <Clock size={22} />
                 <h3 className="text-lg font-semibold text-gray-800">
-                  Archived News
+                  Последние Новости
                 </h3>
               </div>
               <div className="space-y-4">
@@ -210,10 +253,10 @@ export default function AsideSections({ data }) {
               <div className="flex gap-2 justify-start items-center">
                 <Book size={22} />
                 <h3 className="text-lg font-semibold text-gray-800">
-                  Related Sources
+                  Связанные Ресурсы
                 </h3>
               </div>
-              <div className="">
+              <div className=" flex flex-col gap-3">
                 {presentations &&
                   presentations.map((item, index) => {
                     return (
@@ -226,16 +269,57 @@ export default function AsideSections({ data }) {
                             />
                           </div>
                           <div>
-                            <h3 className="text-base font-medium">
-                              {fileNames[index][0].toUpperCase() +
-                                fileNames[index].slice(1)}
-                            </h3>
+                            <a
+                              href={item}
+                              download={
+                                fileNames[index][0].toUpperCase() +
+                                fileNames[index].slice(1)
+                              }
+                            >
+                              <h3 className="text-base font-medium">
+                                {fileNames[index][0].toUpperCase() +
+                                  fileNames[index].slice(1)}
+                              </h3>
+                            </a>
                             <p className="text-xs text-gray-500 font-medium">
                               PDF • 8 min read
                             </p>
                           </div>
                         </div>
-                        <hr className="w-full h-[2px] bg-gray-100" />
+                      </div>
+                    );
+                  })}
+              </div>
+            </div>
+            <div className="flex flex-col gap-4">
+              <div className="flex gap-2 justify-start items-center">
+                <FileVideo size={22} />
+                <h3 className="text-lg font-semibold text-gray-800">
+                  Видео Материалы
+                </h3>
+              </div>
+              <div className="">
+                {videos &&
+                  videos.map((item, index) => {
+                    return (
+                      <div key={index} className="flex flex-col gap-4">
+                        <div className="flex gap-4 items-center">
+                          <div>
+                            <FileText
+                              size={22}
+                              className="box-content p-2 text-indigo-500 bg-slate-100 rounded-lg"
+                            />
+                          </div>
+                          <div>
+                            <a href={item}>
+                              <h3 className="text-base font-medium">{item}</h3>
+                            </a>
+                            <p className="text-xs text-gray-500 font-medium">
+                              Video • 10 min watch
+                            </p>
+                          </div>
+                        </div>
+                        <hr className="w-full h-[2px] bg-gray-100 " />
                       </div>
                     );
                   })}

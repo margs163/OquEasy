@@ -27,6 +27,7 @@ export default function LoginForm({ children }) {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
       },
+      credentials: "include",
       body: new URLSearchParams({
         username: formValues.email,
         password: formValues.password,
@@ -41,7 +42,7 @@ export default function LoginForm({ children }) {
       router.push("/course");
       console.log("Registration completed succesfully!");
     } else {
-      alert("Registration failed!");
+      alert("Login failed!");
     }
   }
 

@@ -3,7 +3,7 @@ from typing import Annotated, Any
 from pydantic import BaseModel
 from ..db_dependency import get_async_session
 from ..schemas.content import Topic, Content, Module
-from sqlalchemy import select
+from sqlalchemy import select, delete
 from sqlalchemy.orm import joinedload
 from sqlalchemy.ext.asyncio import AsyncSession
 import json
@@ -18,15 +18,35 @@ class CreateTopic(BaseModel):
 async def get_topic(session: Annotated[AsyncSession, Depends(get_async_session)]):
     try:
         async with session.begin():
-            topics = await session.execute(select(Topic))
+            topics = await session.execute(
+                select(Topic)
+                .options(joinedload(Topic.content_rel)))
             data = topics.scalars().all()
+            return {"data": data}
+    except Exception as e:
+        raise Exception(e)
+
+@router.get("/{topic_name}")
+async def get_specific_topic(topic_name: Annotated[str, Path()], session: Annotated[AsyncSession, Depends(get_async_session)]):
+    try:
+        async with session.begin():
+            topic = await session.execute(
+                select(Topic)
+                .options(joinedload(Topic.content_rel))
+                .where(Topic.topic_name == topic_name)
+                )
+
+            if not topic:
+                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Could not find a topic.")
+
+            data = topic.scalars().first()
             return {"data": data}
     except Exception as e:
         raise Exception(e)
 
 @router.post("/")
 async def create_topic(create_topic: Annotated[CreateTopic, Body()], session: Annotated[AsyncSession, Depends(get_async_session)]):
-    async with session:
+    async with session.begin():
         module_in_db = await session.execute(select(Module).where(Module.module_name == create_topic.module_name))
         module_in_db = module_in_db.scalars().first()
 
@@ -46,3 +66,17 @@ async def create_topic(create_topic: Annotated[CreateTopic, Body()], session: An
         )
 
         session.add(new_topic)
+
+        return {"inserted_topic_name": new_topic.topic_name, "inserted_topic_id": new_topic.id}
+
+@router.delete("/{topic_name}")
+async def delete_topic(topic_name: Annotated[str, Path()], session: Annotated[AsyncSession, Depends(get_async_session)]):
+    async with session.begin():
+        topic_in_db = await session.execute(select(Topic).where(Topic.topic_name == topic_name))
+        topic_in_db = topic_in_db.scalars().first()
+
+        if not topic_in_db:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Topic not found!")
+
+        await session.execute(delete(Topic).where(Topic.topic_name == topic_name))
+        return {"deleted_status": True}

@@ -76,4 +76,4 @@ app.include_router(content_router)
 app.include_router(topic_router)
 
 if __name__ == "__main__":
-    uvicorn.run("backend_api.main:app", host="0.0.0.0", log_level="info")
+    uvicorn.run("backend_api.main:app", host="0.0.0.0", log_level="info", reload=True)

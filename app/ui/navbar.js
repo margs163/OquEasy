@@ -18,8 +18,8 @@ export default function Navbar() {
           </Link>
         </li>
         <li className="hidden md:flex">
-          <Link className=" hover:text-green-600" href={"#"}>
-            News
+          <Link className=" hover:text-green-600" href={"/course"}>
+            Course
           </Link>
         </li>
         <li className="hidden md:flex">

@@ -38,3 +38,5 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+
+There is also a publicly hosted version of the site now, it can be accessed by referring to the IP address of a [server](http://34.9.155.153/).

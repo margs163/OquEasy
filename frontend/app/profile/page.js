@@ -1,28 +1,26 @@
 "use client";
-import {
-  Tabs,
-  TabsList,
-  TabsTrigger,
-  TabsContent,
-} from "@/components/ui/tabs.jsx";
-import { useIsMobile } from "@/hooks/use-mobile";
-import MainInformation from "../ui/MainInformation";
-import ProfileInformation from "../ui/ProfileInformation";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Link, Search } from "lucide-react";
-import { useEffect, useState } from "react";
-import AdminPanel from "../ui/AdminPanel";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { DialogClose } from "@radix-ui/react-dialog";
-import CreateTopic from "../ui/CreateTopic";
+  DialogTrigger
+} from "@/components/ui/dialog"
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/tabs.jsx"
+import { useIsMobile } from "@/hooks/use-mobile"
+import { DialogClose } from "@radix-ui/react-dialog"
+import { Search } from "lucide-react"
+import { useEffect, useState } from "react"
+import AdminPanel from "../ui/AdminPanel"
+import MainInformation from "../ui/MainInformation"
+import ProfileInformation from "../ui/ProfileInformation"
 
 export default function Page() {
   const isMobile = useIsMobile();
@@ -57,7 +55,7 @@ export default function Page() {
   useEffect(() => {
     async function fetchUser() {
       try {
-        const response = await fetch("http://localhost:8000/users/me", {
+        const response = await fetch("http://localhost:8000/api/users/me", {
           credentials: "include",
         });
         if (!response.ok) {
@@ -124,7 +122,7 @@ export default function Page() {
   async function onCreateTopic(e) {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:8000/topic", {
+      const response = await fetch("http://localhost:8000/api/topic", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -144,7 +142,7 @@ export default function Page() {
       const formDataText = new FormData();
       formDataText.append("topic_content", createTopic.fileMarkdown);
       const responseText = await fetch(
-        `http://localhost:8000/content/text/${createTopic.topicName}?` +
+        `http://localhost:8000/api/content/text/${createTopic.topicName}?` +
           new URLSearchParams({
             module_name: createTopic.moduleName,
             heading: createTopic.heading,
@@ -170,7 +168,7 @@ export default function Page() {
       );
 
       const responsePresent = await fetch(
-        `http://localhost:8000/content/presentation/${createTopic.topicName}?` +
+        `http://localhost:8000/api/content/presentation/${createTopic.topicName}?` +
           new URLSearchParams({
             module_name: createTopic.moduleName,
             video_link: createTopic.fileVideo,
@@ -194,7 +192,7 @@ export default function Page() {
   async function onDeleteTopic(topic_name) {
     try {
       const response = await fetch(
-        `http://localhost:8000/topic/${topic_name}`,
+        `http://localhost:8000/api/topic/${topic_name}`,
         {
           method: "DELETE",
         }
@@ -213,7 +211,7 @@ export default function Page() {
 
   async function onFormSubmit() {
     try {
-      const response = await fetch("http://localhost:8000/users/me", {
+      const response = await fetch("http://localhost:8000/api/users/me", {
         method: "PATCH",
         credentials: "include",
         headers: {

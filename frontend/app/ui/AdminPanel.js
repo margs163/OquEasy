@@ -1,21 +1,20 @@
 import {
-  Ellipsis,
-  FileText,
-  FileVideo,
-  Folder,
-  Pen,
-  Trash,
-} from "lucide-react";
-import { useEffect, useState } from "react";
-import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { DialogClose } from "@radix-ui/react-dialog";
+} from "@/components/ui/dialog"
+import { DialogClose } from "@radix-ui/react-dialog"
+import {
+  FileText,
+  FileVideo,
+  Folder,
+  Pen,
+  Trash
+} from "lucide-react"
+import { useEffect, useState } from "react"
 
 export default function AdminPanel({
   onDeleteTopic,
@@ -47,7 +46,7 @@ export default function AdminPanel({
   useEffect(() => {
     async function fetchTopics() {
       try {
-        const response = await fetch("http://localhost:8000/topic");
+        const response = await fetch("http://localhost:8000/api/topic");
         if (!response.ok) {
           console.error("Could not fetch topics.");
         }
@@ -78,7 +77,7 @@ export default function AdminPanel({
 
   async function fetchCurrentEditingTopic(topic_name) {
     try {
-      const response = await fetch(`http://localhost:8000/topic/${topic_name}`);
+      const response = await fetch(`http://localhost:8000/api/topic/${topic_name}`);
       if (!response.ok) {
         console.error("could not request a topic content");
       }
@@ -137,7 +136,7 @@ export default function AdminPanel({
     e.preventDefault();
     try {
       const response = await fetch(
-        `http://localhost:8000/content/text/${topic_name}?` +
+        `http://localhost:8000/api/content/text/${topic_name}?` +
           new URLSearchParams({
             heading: editTopic.heading,
             delete_content: false,
@@ -160,7 +159,7 @@ export default function AdminPanel({
         );
 
         const responsePresent = await fetch(
-          `http://localhost:8000/content/presentation/${topic_name}?` +
+          `http://localhost:8000/api/content/presentation/${topic_name}?` +
             new URLSearchParams({
               module_name: editTopic.module_name,
               video_link: editTopic.editingVideo,
@@ -177,7 +176,7 @@ export default function AdminPanel({
         console.log(dataPresent);
       } else if (editTopic.editingVideo) {
         const responseVideo = await fetch(
-          `http://localhost:8000/content/presentation/${topic_name}?` +
+          `http://localhost:8000/api/content/presentation/${topic_name}?` +
             new URLSearchParams({
               module_name: editTopic.module_name,
               video_link: editTopic.editingVideo,
@@ -202,7 +201,7 @@ export default function AdminPanel({
   async function handleDeletePresentation(topic_name, file_name) {
     try {
       const response = await fetch(
-        `http://localhost:8000/content/presentation/${topic_name}/${file_name}`,
+        `http://localhost:8000/api/content/presentation/${topic_name}/${file_name}`,
         {
           method: "DELETE",
         }
@@ -229,7 +228,7 @@ export default function AdminPanel({
   async function handleDeleteVideo(topic_name, video_link) {
     try {
       const response = await fetch(
-        `http://localhost:8000/content/video/${topic_name}?` +
+        `http://localhost:8000/api/content/video/${topic_name}?` +
           new URLSearchParams({
             video_link: video_link,
           }),

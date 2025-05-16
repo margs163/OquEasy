@@ -273,13 +273,13 @@ async def inser_topic_presentation(
                 
             if topic_presentation and video_link:
                 topic_in_db.content_rel.presentations.append(
-                    ContentPresentation(presentation_path=f"http://localhost:8000/static/{module_name}/{topic_name}/{topic_presentation.filename}"))
+                    ContentPresentation(presentation_path=f"http://localhost:8000/api/static/{module_name}/{topic_name}/{topic_presentation.filename}"))
                 topic_in_db.content_rel.videos.append(
                     ContentVideo(video_path=video_link)
                 )
             elif topic_presentation:
                 topic_in_db.content_rel.presentations.append(
-                    ContentPresentation(presentation_path=f"http://localhost:8000/static/{module_name}/{topic_name}/{topic_presentation.filename}"))
+                    ContentPresentation(presentation_path=f"http://localhost:8000/api/static/{module_name}/{topic_name}/{topic_presentation.filename}"))
             elif video_link:
                 topic_in_db.content_rel.videos.append(
                     ContentVideo(video_path=video_link)
@@ -327,7 +327,7 @@ async def delete_topic_presentation(
 
             await session.delete(presentation_to_delete)
 
-            file_path = os.path.abspath(presentation_to_delete.presentation_path.replace("http://localhost:8000", "./backend_api"))
+            file_path = os.path.abspath(presentation_to_delete.presentation_path.replace("http://localhost:8000/api", "./backend_api"))
             if os.path.exists(file_path):
                 os.remove(file_path)
                 print(f"[DEBUG]: File '{file_path}' deleted from filesystem.")

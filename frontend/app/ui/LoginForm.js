@@ -1,9 +1,9 @@
 "use client";
 
-import { User, Lock } from "lucide-react";
-import Link from "next/link";
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { Lock, User } from "lucide-react"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
 
 export default function LoginForm({ children }) {
   const [formValues, setFormValues] = useState({
@@ -22,7 +22,7 @@ export default function LoginForm({ children }) {
   async function handleSubmition(e) {
     e.preventDefault();
 
-    const response = await fetch("http://localhost:8000/auth/jwt/login", {
+    const response = await fetch("http://localhost:8000/api/auth/jwt/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",

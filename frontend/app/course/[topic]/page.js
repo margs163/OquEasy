@@ -1,35 +1,23 @@
 "use client";
 import {
-  Breadcrumb,
-  BreadcrumbEllipsis,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb.jsx";
-import {
   Card,
   CardContent,
   CardHeader,
-  CardDescription,
-  CardTitle,
-  CardFooter,
-} from "@/components/ui/card.jsx";
+  CardTitle
+} from "@/components/ui/card.jsx"
 
+import AsideSections from "@/app/ui/aside"
+import { SidebarTrigger } from "@/components/ui/sidebar"
 import {
   Tabs,
+  TabsContent,
   TabsList,
   TabsTrigger,
-  TabsContent,
-} from "@/components/ui/tabs.jsx";
-import Link from "next/link";
-import MarkDownIt from "markdown-it";
-import { useParams } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { Sidebar } from "lucide-react";
-import { SidebarTrigger } from "@/components/ui/sidebar";
-import AsideSections from "@/app/ui/aside";
+} from "@/components/ui/tabs.jsx"
+import { useIsMobile } from "@/hooks/use-mobile"
+import MarkDownIt from "markdown-it"
+import { useParams } from "next/navigation"
+import { useEffect, useRef, useState } from "react"
 
 export default function Page() {
   const { topic } = useParams();
@@ -47,7 +35,7 @@ export default function Page() {
   useEffect(() => {
     async function fetchResources() {
       try {
-        const response = await fetch(`http://localhost:8000/content/${topic}`);
+        const response = await fetch(`http://localhost:8000/api/content/${topic}`);
         if (!response.ok) {
           throw Error("damn");
         }

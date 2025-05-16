@@ -1,8 +1,8 @@
 "use client";
-import { Lock, User } from "lucide-react";
-import { useState } from "react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { Lock, User } from "lucide-react"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
 
 export default function RegisterForm({ children }) {
   const [formValues, setFormValues] = useState({
@@ -24,7 +24,7 @@ export default function RegisterForm({ children }) {
 
   async function handleSubmition(e) {
     e.preventDefault();
-    const response = await fetch("http://localhost:8000/auth/register", {
+    const response = await fetch("http://localhost:8000/api/auth/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

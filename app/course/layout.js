@@ -49,8 +49,6 @@ export default function Layout({ children }) {
     <div className="bg-slate-100">
       <NavbarCourse className="" navbarOpen={navbarOpen}>
         <li className="flex items-center justify-start gap-2">
-          {/* <PanelRight size={18} className="text-gray-600" />
-          <span className="w-3 h-full pb-0.5 pl-1 text-gray-500">|</span> */}
           <Breadcrumb className="">
             <BreadcrumbList className="flex justify-start items-center">
               {tabs.map((item, index) => {

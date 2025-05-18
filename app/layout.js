@@ -2,30 +2,6 @@ import "./globals.css";
 import Link from "next/link";
 import Navbar from "./ui/navbar";
 import { Roboto } from "next/font/google";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/app/ui/app-sidebar";
-import {
-  Breadcrumb,
-  BreadcrumbEllipsis,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb.jsx";
-
-import { Megaphone, ServerCrash, HeartPulse } from "lucide-react";
-
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-
-import { Calendar } from "@/components/ui/calendar";
-import AsideSections from "./ui/aside";
 
 export const metadata = {
   title: "Main Page prototype",
